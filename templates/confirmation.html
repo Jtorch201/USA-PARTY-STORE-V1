@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Order Confirmed{% endblock %}
+{% block content %}
+    <h1>Order #{{ order.id }} Confirmed</h1>
+    <p><strong>Customer:</strong> {{ order.customer_name }}</p>
+    <p><strong>Contact:</strong> {{ order.contact_info }}</p>
+    <p><strong>Event Date:</strong> {{ order.event_date.strftime("%b %d, %Y") }}</p>
+    <p><strong>Fulfillment:</strong> {{ order.fulfillment_type.value }}</p>
+
+    {% if order.fulfillment_type.value == "delivery" %}
+        <p><strong>Drop-off:</strong> {{ order.dropoff_time|clock12 }}</p>
+        <p><strong>Pickup-by:</strong> {{ order.pickup_by_time|clock12 }}</p>
+    {% else %}
+        <p><strong>Customer arriving at:</strong> {{ order.pickup_time|clock12 }}</p>
+    {% endif %}
+
+    <h3>Items Ordered</h3>
+    <table>
+        <tr><th>Item</th><th>Quantity</th></tr>
+        {% for oi in order.order_items %}
+        <tr>
+            <td>{{ oi.item.name }}</td>
+            <td>{{ oi.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

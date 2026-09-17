@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Available Items{% endblock %}
+{% block content %}
+    <h1>Available Chairs & Tables</h1>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Type</th>
+            <th>Price / Day</th>
+            <th>In Stock</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.type.value }}</td>
+            <td>${{ "%.2f"|format(item.price_per_day) }}</td>
+            <td>{{ item.quantity_available }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
